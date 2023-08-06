@@ -11,7 +11,6 @@ body {
   }
   
   .search-form {
-   
     margin: 20px 0;
     display: flex;
   }
@@ -20,6 +19,7 @@ body {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px 0 0 4px;
+    transition: border-color 0.3s, box-shadow 0.3s;
   }
   
   .search-form button {
@@ -29,7 +29,18 @@ body {
     border: none;
     border-radius: 0 4px 4px 0;
     cursor: pointer;
+    transition: background-color 0.3s;
   }
+
+  .search-form input[type="text"]:focus,
+  .search-form input[type="text"]:hover {
+    border-color: #007bff;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.search-form button:hover {
+    background-color: #0056b3;
+}
   
   .gallery {
     display: flex;
@@ -44,8 +55,13 @@ body {
     border-radius: 5px;
     max-width: 300px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #ceebf6;
+    background-color: #ceebf65b;
+    transition: transform 0.3s;
   }
+
+  .photo-card:hover {
+    transform: scale(1.05);
+}
   
   .photo-card img {
     max-width: 100%;
