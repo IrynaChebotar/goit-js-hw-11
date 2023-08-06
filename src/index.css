@@ -6,10 +6,12 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    background-image: url(./images/flowers-276014_1280.jpg);
     
   }
   
   .search-form {
+   
     margin: 20px 0;
     display: flex;
   }
@@ -42,6 +44,7 @@ body {
     border-radius: 5px;
     max-width: 300px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    background-color: #ceebf6;
   }
   
   .photo-card img {
