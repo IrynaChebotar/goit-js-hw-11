@@ -110,6 +110,9 @@ async function fetchNextPage() {
       const card = createImageCard(imageData);
       gallery.appendChild(card);
     });
+    if (pixabayAPI.page >= response.data.totalPages) {
+        window.removeEventListener('scroll', handleScroll);
+      }
 
     isLoading = false;
     lightbox.refresh();
