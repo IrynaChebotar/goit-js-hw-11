@@ -46,7 +46,7 @@ async function fetchImages() {
     Notiflix.Notify.success(`Hooray! We found ${response.data.totalHits} images.`);
     
     lightbox.refresh();
-    smoothScrollToGallery();
+    // smoothScrollToGallery();
   } catch (error) {
     console.error('Error fetching images:', error);
     Notiflix.Notify.failure('Oops! Something went wrong while fetching images.');
@@ -84,10 +84,46 @@ function createImageCard(imageData) {
   return template.content.firstElementChild;
 }
 
-function smoothScrollToGallery() {
-  const { height: cardHeight } = document.querySelector(".gallery").firstElementChild.getBoundingClientRect();
-  window.scrollBy({
-    top: cardHeight * 2,
-    behavior: "smooth",
-  });
+let isLoading = false;
+
+window.addEventListener('scroll', () => {
+  const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+  
+  if (scrollTop + clientHeight >= scrollHeight - 10 && !isLoading) {
+    isLoading = true;
+    fetchNextPage();
+  }
+});
+
+async function fetchNextPage() {
+  try {
+    const response = await pixabayAPI.fetchImgs();
+    const imagesData = response.data.hits;
+    
+    if (imagesData.length === 0) {
+      Notiflix.Notify.failure('Sorry, there are no more images.');
+      return;
+    }
+
+    imagesData.forEach(imageData => {
+      const card = createImageCard(imageData);
+      gallery.appendChild(card);
+    });
+
+    isLoading = false;
+    lightbox.refresh();
+    smoothScrollToGallery(); 
+  } catch (error) {
+    isLoading = false;
+    console.error('Error fetching images:', error);
+    console.error(error);
+    Notiflix.Notify.failure('Oops! Something went wrong while fetching images.');
+  }
 }
+function smoothScrollToGallery() {
+    const { height: cardHeight } = document.querySelector(".gallery").firstElementChild.getBoundingClientRect();
+    window.scrollBy({
+      top: cardHeight * 2,
+      behavior: "smooth",
+    });
+  }
