@@ -97,6 +97,7 @@ window.addEventListener('scroll', () => {
 
 async function fetchNextPage() {
   try {
+    pixabayAPI.page++;
     const response = await pixabayAPI.fetchImgs();
     const imagesData = response.data.hits;
     
